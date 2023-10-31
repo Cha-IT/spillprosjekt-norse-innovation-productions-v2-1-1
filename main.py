@@ -11,6 +11,7 @@ from pygame.locals import (
 )
 import random
 import os
+import math
 
 '''Import av adre filer'''
 import brettet
@@ -19,18 +20,21 @@ import brettet
 pygame.init()
 
 # Vindu Høyde og bredde
-WINDOW_HEIGHT = 650
-WINDOWS_WIDTH = 650
+WINDOW_HEIGHT = 800
+WINDOW_WIDTH = 800
 
+PI = math.pi
 # Fargepalett
 COLOR_WHITE = (255, 255, 255)
 COLOR_BLACK = (0, 0, 0)
 COLOR_RED = (255, 0, 0)
 COLOR_YELLOW = (253, 255, 0)
+COLOR_BLUE = (0, 0 ,255)
+color= COLOR_BLUE
 
-level = boards
+level = brettet.boards
 
-screen = pygame.display.set_mode([WINDOWS_WIDTH, WINDOW_HEIGHT])
+screen = pygame.display.set_mode([WINDOW_WIDTH, WINDOW_HEIGHT])
 
 ''' CLASSES '''
 
@@ -44,12 +48,41 @@ class Ghost(pygame.sprite.Sprite):
     def __init__(self):
         super(Ghost, self).__init__()
 
+def draw_board():
+    num1 = ((WINDOW_HEIGHT - 50) // 32)
+    num2 = (WINDOW_WIDTH // 30)
+    for i in range(len(level)):
+        for j in range(len(level[i])):
+            if level[i][j] == 1:
+                pygame.draw.circle(screen, 'white', (j * num2 + (0.5 * num2), i * num1 + (0.5 * num1)), 4)
+            if level[i][j] == 2: #and not flicker:
+                pygame.draw.circle(screen, 'white', (j * num2 + (0.5 * num2), i * num1 + (0.5 * num1)), 10)
+            if level[i][j] == 3:
+                pygame.draw.line(screen, color, (j * num2 + (0.5 * num2), i * num1),
+                                 (j * num2 + (0.5 * num2), i * num1 + num1), 3)
+            if level[i][j] == 4:
+                pygame.draw.line(screen, color, (j * num2, i * num1 + (0.5 * num1)),
+                                 (j * num2 + num2, i * num1 + (0.5 * num1)), 3)
+            if level[i][j] == 5:
+                pygame.draw.arc(screen, color, [(j * num2 - (num2 * 0.4)) - 2, (i * num1 + (0.5 * num1)), num2, num1],
+                                0, PI / 2, 3)
+            if level[i][j] == 6:
+                pygame.draw.arc(screen, color,
+                                [(j * num2 + (num2 * 0.5)), (i * num1 + (0.5 * num1)), num2, num1], PI / 2, PI, 3)
+            if level[i][j] == 7:
+                pygame.draw.arc(screen, color, [(j * num2 + (num2 * 0.5)), (i * num1 - (0.4 * num1)), num2, num1], PI,
+                                3 * PI / 2, 3)
+            if level[i][j] == 8:
+                pygame.draw.arc(screen, color,
+                                [(j * num2 - (num2 * 0.4)) - 2, (i * num1 - (0.4 * num1)), num2, num1], 3 * PI / 2,
+                                2 * PI, 3)
+            if level[i][j] == 9:
+                pygame.draw.line(screen, 'white', (j * num2, i * num1 + (0.5 * num1)),
+                                 (j * num2 + num2, i * num1 + (0.5 * num1)), 3)
 
 Life = 3
 
 running = True
-
-path=[((0,400),(200,30)),((200,400),(30,200)),((200,600),(300,30)),((470,300),(30,300)),((500,300),(250,30)),((0,200),(200,30))]
 
 ''' HOVED LOOPEN '''
 while running:
@@ -59,10 +92,10 @@ while running:
         if event.type == QUIT:
             running = False
 
-    screen.fill(COLOR_RED)
-    Draw_board()
+    screen.fill(COLOR_BLACK)
+    draw_board()
 
-    for x in path:
-        pygame.draw.rect(screen,(255,255,255),x)
+    #for x in path:
+        #pygame.draw.rect(screen,(255,255,255),x)
 
     pygame.display.flip()
