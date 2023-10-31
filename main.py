@@ -20,8 +20,9 @@ import brettet
 pygame.init()
 
 # Vindu Høyde og bredde
-WINDOW_HEIGHT = 800
-WINDOW_WIDTH = 800
+WINDOW_HEIGHT = 650
+WINDOWS_WIDTH = 650
+# cock um... i mean clock
 
 PI = math.pi
 # Fargepalett
@@ -40,13 +41,28 @@ screen = pygame.display.set_mode([WINDOW_WIDTH, WINDOW_HEIGHT])
 
 # Spiller classen
 class PacMan(pygame.sprite.Sprite):
+#create player hight width color and shape
     def __init__(self):
         super(PacMan, self).__init__()
+        self.surf = pygame.Surface((25, 25))
+        self.surf.fill((0, 0, 255))
+        self.rect = self.surf.get_rect()
+#create movment for the player 
+    def moveUpdate(self, Key_pressed, speed):
+        if Key_pressed[K_UP]:
+            self.rect.move_ip(0, -speed)
+        if Key_pressed[K_DOWN]:
+            self.rect.move_ip(0, speed)
+        if Key_pressed[K_LEFT]:
+            self.rect.move_ip(-speed, 0)
+        if Key_pressed[K_RIGHT]:
+            self.rect.move_ip(speed, 0)
 
 # Fiende classen
 class Ghost(pygame.sprite.Sprite):
     def __init__(self):
         super(Ghost, self).__init__()
+
 
 def draw_board():
     num1 = ((WINDOW_HEIGHT - 50) // 32)
@@ -79,9 +95,10 @@ def draw_board():
             if level[i][j] == 9:
                 pygame.draw.line(screen, 'white', (j * num2, i * num1 + (0.5 * num1)),
                                  (j * num2 + num2, i * num1 + (0.5 * num1)), 3)
+pacman = PacMan()
 
 Life = 3
-
+speed = 5
 running = True
 
 ''' HOVED LOOPEN '''
@@ -91,11 +108,20 @@ while running:
 
         if event.type == QUIT:
             running = False
-
-    screen.fill(COLOR_BLACK)
+            
     draw_board()
+    screen.fill(COLOR_BLACK)
+    
+    for x in path:
+        pygame.draw.rect(screen,(255,255,255),x)
+    
+    # create player
+    screen.blit(pacman.surf, pacman.rect)
 
-    #for x in path:
-        #pygame.draw.rect(screen,(255,255,255),x)
+    # update player position
+    pressed_key = pygame.key.get_pressed()
+    pacman.moveUpdate(pressed_key, speed)
 
     pygame.display.flip()
+    # set frame rate to 30
+    clock.tick(30)
