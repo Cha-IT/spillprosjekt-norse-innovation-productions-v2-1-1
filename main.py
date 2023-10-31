@@ -12,6 +12,9 @@ from pygame.locals import (
 import random
 import os
 
+'''Import av adre filer'''
+import brettet
+
 ''' Initialiserer Pygame som Library og funksjon '''
 pygame.init()
 
@@ -24,6 +27,8 @@ COLOR_WHITE = (255, 255, 255)
 COLOR_BLACK = (0, 0, 0)
 COLOR_RED = (255, 0, 0)
 COLOR_YELLOW = (253, 255, 0)
+
+level = boards
 
 screen = pygame.display.set_mode([WINDOWS_WIDTH, WINDOW_HEIGHT])
 
@@ -55,6 +60,8 @@ while running:
             running = False
 
     screen.fill(COLOR_RED)
+    Draw_board()
+
     for x in path:
         pygame.draw.rect(screen,(255,255,255),x)
 
