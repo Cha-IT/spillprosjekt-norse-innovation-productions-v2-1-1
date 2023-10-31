@@ -21,17 +21,20 @@ pygame.init()
 
 # Vindu Høyde og bredde
 WINDOW_HEIGHT = 650
-WINDOWS_WIDTH = 650
+WINDOW_WIDTH = 650
 # cock um... i mean clock
+clock = pygame.time.Clock()
+
 
 PI = math.pi
+
 # Fargepalett
 COLOR_WHITE = (255, 255, 255)
 COLOR_BLACK = (0, 0, 0)
 COLOR_RED = (255, 0, 0)
 COLOR_YELLOW = (253, 255, 0)
 COLOR_BLUE = (0, 0 ,255)
-color= COLOR_BLUE
+color = COLOR_BLUE
 
 level = brettet.boards
 
@@ -109,11 +112,9 @@ while running:
         if event.type == QUIT:
             running = False
             
+    screen.fill(COLOR_BLACK)       
     draw_board()
-    screen.fill(COLOR_BLACK)
     
-    for x in path:
-        pygame.draw.rect(screen,(255,255,255),x)
     
     # create player
     screen.blit(pacman.surf, pacman.rect)
