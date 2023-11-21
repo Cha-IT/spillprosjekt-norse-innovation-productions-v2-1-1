@@ -47,7 +47,7 @@ class PacMan(pygame.sprite.Sprite):
 #create player hight width color and shape
     def __init__(self):
         super(PacMan, self).__init__()
-        self.surf = pygame.Surface((25, 25))
+        self.surf = pygame.Surface((45, 45))
         self.surf.fill((0, 0, 255))
         self.rect = self.surf.get_rect()
 #create movment for the player 
@@ -103,6 +103,9 @@ pacman = PacMan()
 Life = 3
 speed = 5
 running = True
+player_x = 450
+player_y = 663
+direction = 0
 
 ''' HOVED LOOPEN '''
 while running:
@@ -111,13 +114,20 @@ while running:
 
         if event.type == QUIT:
             running = False
-            
+
     screen.fill(COLOR_BLACK)       
     draw_board()
     
     
-    # create player
-    screen.blit(pacman.surf, pacman.rect)
+    # create player 0=right, 1=left, 2=up, 3=down
+    if direction == 0:
+        screen.blit((pacman.surf), (player_x, player_y))
+    elif direction == 1:
+        screen.blit(pygame.transform.flip(pacman.surf, True, False), (player_x, player_y))
+    elif direction == 2:
+        screen.blit(pygame.transform.rotate(pacman.surf, 90), (player_x, player_y))
+    elif direction == 3:
+        screen.blit(pygame.transform.rotate(pacman.surf, 270), (player_x, player_y))
 
     # update player position
     pressed_key = pygame.key.get_pressed()
