@@ -19,6 +19,14 @@ import brettet
 ''' Initialiserer Pygame som Library og funksjon '''
 pygame.init()
 
+current_folder = os.path.dirname(os.path.abspath(__file__))
+assets_folder = os.path.join(current_folder, "assets")
+
+# Load image from the assets folder
+image_file = "pacman.png"
+image_path = os.path.join(assets_folder, image_file)
+image = pygame.image.load(image_path)
+
 # Vindu Høyde og bredde
 WINDOW_HEIGHT = 650
 WINDOW_WIDTH = 650
@@ -47,9 +55,10 @@ class PacMan(pygame.sprite.Sprite):
 #create player hight width color and shape
     def __init__(self):
         super(PacMan, self).__init__()
-        self.surf = pygame.Surface((25, 25))
-        self.surf.fill((0, 0, 255))
+        original_image = pygame.image.load(image_path)
+        self.surf = pygame.transform.scale(original_image, (20, 20))  # Adjust the size as needed
         self.rect = self.surf.get_rect()
+
 #create movment for the player 
     def moveUpdate(self, Key_pressed, speed):
         if Key_pressed[K_UP]:
