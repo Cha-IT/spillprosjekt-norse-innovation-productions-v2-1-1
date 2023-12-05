@@ -1,6 +1,10 @@
 ''' Importerer forskjellige libraries inn i vårt spill '''
 import pygame
+
 import score
+import os
+import fiender
+
 from pygame.locals import (
     K_ESCAPE,
     K_DOWN,
@@ -19,7 +23,7 @@ pygame.init()
 # Vindu Høyde og bredde
 WINDOW_HEIGHT = 650
 WINDOW_WIDTH = 650
-# cock um... i mean clock
+
 clock = pygame.time.Clock()
 
 
@@ -44,9 +48,8 @@ class PacMan(pygame.sprite.Sprite):
     def __init__(self):
         super(PacMan, self).__init__()
         self.surf = pygame.Surface((25, 25))
-        self.surf.fill((0, 0, 255))
-        self.rect = self.surf.get_rect(center = (WINDOW_WIDTH/2, WINDOW_HEIGHT/2))
-        
+        self.surf.fill((COLOR_YELLOW))
+        self.rect = self.surf.get_rect()
 #create movment for the player 
     def moveUpdate(self, d, speed):
         if d == -1:
@@ -73,6 +76,7 @@ class PacMan(pygame.sprite.Sprite):
 
 pacman = PacMan()
 Score = score.Score()
+fiende = fiender.Fiende()
 speed = 10
 running = True
 direction = -1
@@ -88,11 +92,13 @@ while running:
     #fill background
     screen.fill(COLOR_BLACK)       
 
+
     #score
     score.score_instance(Score, screen, WINDOW_WIDTH)
 
-    # create player
+    # Show and upadte player and enemies
     screen.blit(pacman.surf, pacman.rect)
+    screen.blit(fiende.surf, fiende.rect)
 
     # update player position
     pressed_key = pygame.key.get_pressed()
@@ -113,6 +119,10 @@ while running:
     elif pressed_key[K_RIGHT]:
         direction = 3
 
+    pacman.moveUpdate(pressed_key, speed)
+    
+    # Update enemy positions
+    fiende.moveFiende(speed)
 
     pygame.display.flip()
 
