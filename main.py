@@ -27,7 +27,7 @@ image = pygame.image.load(image_path)
 # Vindu Høyde og bredde
 WINDOW_HEIGHT = 650
 WINDOW_WIDTH = 650
-# cock um... i mean clock
+
 clock = pygame.time.Clock()
 
 
