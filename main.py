@@ -1,5 +1,6 @@
 ''' Importerer forskjellige libraries inn i vårt spill '''
 import pygame
+import os
 from pygame.locals import (
     K_ESCAPE,
     K_DOWN,
@@ -51,7 +52,7 @@ class PacMan(pygame.sprite.Sprite):
     def __init__(self):
         super(PacMan, self).__init__()
         self.surf = pygame.Surface((25, 25))
-        self.surf.fill((0, 0, 255))
+        self.surf.fill((COLOR_YELLOW))
         self.rect = self.surf.get_rect()
 
 #create movment for the player 
