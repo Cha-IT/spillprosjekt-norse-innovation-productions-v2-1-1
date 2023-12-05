@@ -9,28 +9,30 @@ from pygame.locals import (
     KEYDOWN,
     QUIT
 )
-import random
-import os
-
+import math
 ''' Initialiserer Pygame som Library og funksjon '''
 pygame.init()
 
 # Vindu Høyde og bredde
 WINDOW_HEIGHT = 650
-WINDOWS_WIDTH = 650
+WINDOW_WIDTH = 650
 # cock um... i mean clock
 clock = pygame.time.Clock()
+
+
+PI = math.pi
 
 # Fargepalett
 COLOR_WHITE = (255, 255, 255)
 COLOR_BLACK = (0, 0, 0)
 COLOR_RED = (255, 0, 0)
 COLOR_YELLOW = (253, 255, 0)
+COLOR_BLUE = (0, 0 ,255)
+color= COLOR_BLUE
+color = COLOR_BLUE
 
-screen = pygame.display.set_mode([WINDOWS_WIDTH, WINDOW_HEIGHT])
-
+screen = pygame.display.set_mode([WINDOW_WIDTH, WINDOW_HEIGHT])
 ''' CLASSES '''
-
 # Spiller classen
 class PacMan(pygame.sprite.Sprite):
 #create player hight width color and shape
@@ -50,31 +52,17 @@ class PacMan(pygame.sprite.Sprite):
         if Key_pressed[K_RIGHT]:
             self.rect.move_ip(speed, 0)
 
-# Fiende classen
-class Ghost(pygame.sprite.Sprite):
-    def __init__(self):
-        super(Ghost, self).__init__()
-
 pacman = PacMan()
-
-Life = 3
-speed = 5
+speed = 10
 running = True
-
-path=[((0,400),(200,30)),((200,400),(30,200)),((200,600),(300,30)),((470,300),(30,300)),((500,300),(250,30)),((0,200),(200,30))]
-
 ''' HOVED LOOPEN '''
 while running:
-
     for event in pygame.event.get():
-
         if event.type == QUIT:
             running = False
 
-    screen.fill(COLOR_RED)
-    for x in path:
-        pygame.draw.rect(screen,(255,255,255),x)
-    
+    screen.fill(COLOR_BLACK)       
+
     # create player
     screen.blit(pacman.surf, pacman.rect)
 
@@ -84,4 +72,5 @@ while running:
 
     pygame.display.flip()
     # set frame rate to 30
+    
     clock.tick(30)
