@@ -1,5 +1,6 @@
 ''' Importerer forskjellige libraries inn i vårt spill '''
 import pygame
+import score
 from pygame.locals import (
     K_ESCAPE,
     K_DOWN,
@@ -46,7 +47,6 @@ class PacMan(pygame.sprite.Sprite):
         self.surf.fill((0, 0, 255))
         self.rect = self.surf.get_rect(center = (WINDOW_WIDTH/2, WINDOW_HEIGHT/2))
         
-
 #create movment for the player 
     def moveUpdate(self, d, speed):
         if d == -1:
@@ -59,6 +59,7 @@ class PacMan(pygame.sprite.Sprite):
             self.rect.move_ip(-speed, 0)
         if d == 3:
             self.rect.move_ip(speed, 0)
+
 #borders around the world
     def borders(self):
         if self.rect.left <= 0:
@@ -71,16 +72,24 @@ class PacMan(pygame.sprite.Sprite):
             self.rect.bottom = WINDOW_HEIGHT
 
 pacman = PacMan()
+Score = score.Score()
 speed = 10
 running = True
 direction = -1
+points = 0
+
+pygame.time.set_timer(100, 100)
+
 ''' HOVED LOOPEN '''
 while running:
     for event in pygame.event.get():
         if event.type == QUIT:
             running = False
-
+    #fill background
     screen.fill(COLOR_BLACK)       
+
+    #score
+    score.score_instance(Score, screen, WINDOW_WIDTH)
 
     # create player
     screen.blit(pacman.surf, pacman.rect)
@@ -90,7 +99,7 @@ while running:
 
     #move in a direction with a speed
     pacman.moveUpdate(direction, speed)
-    
+
     #traps player in hell
     pacman.borders()
 
@@ -104,7 +113,10 @@ while running:
     elif pressed_key[K_RIGHT]:
         direction = 3
 
+
     pygame.display.flip()
 
     # set frame rate to 30
     clock.tick(30)
+    
+
