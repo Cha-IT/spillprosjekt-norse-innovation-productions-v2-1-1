@@ -42,19 +42,20 @@ class PacMan(pygame.sprite.Sprite):
         self.surf.fill((0, 0, 255))
         self.rect = self.surf.get_rect()
 #create movment for the player 
-    def moveUpdate(self, Key_pressed, speed):
-        if Key_pressed[K_UP]:
+    def moveUpdate(self, d, speed):
+        if d == 0:
             self.rect.move_ip(0, -speed)
-        if Key_pressed[K_DOWN]:
+        if d == 1:
             self.rect.move_ip(0, speed)
-        if Key_pressed[K_LEFT]:
+        if d == 2:
             self.rect.move_ip(-speed, 0)
-        if Key_pressed[K_RIGHT]:
+        if d == 3:
             self.rect.move_ip(speed, 0)
 
 pacman = PacMan()
 speed = 10
 running = True
+direction = 0
 ''' HOVED LOOPEN '''
 while running:
     for event in pygame.event.get():
@@ -68,7 +69,17 @@ while running:
 
     # update player position
     pressed_key = pygame.key.get_pressed()
-    pacman.moveUpdate(pressed_key, speed)
+
+    pacman.moveUpdate(direction, speed)
+
+    if pressed_key[K_UP]:
+        direction = 0
+    elif pressed_key[K_DOWN]:
+        direction = 1
+    elif pressed_key[K_LEFT]:
+        direction = 2
+    elif pressed_key[K_RIGHT]:
+        direction = 3
 
     pygame.display.flip()
     # set frame rate to 30
