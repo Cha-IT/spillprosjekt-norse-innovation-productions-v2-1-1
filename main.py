@@ -1,6 +1,7 @@
 ''' Importerer forskjellige libraries inn i vårt spill '''
 import pygame
 import os
+import fiender
 from pygame.locals import (
     K_ESCAPE,
     K_DOWN,
@@ -60,6 +61,7 @@ class PacMan(pygame.sprite.Sprite):
 
 
 pacman = PacMan()
+fiende = fiender.Fiende()
 speed = 10
 running = True
 
@@ -71,12 +73,16 @@ while running:
 
     screen.fill(COLOR_BLACK)       
 
-    # create player
+    # Show and upadte player and enemies
     screen.blit(pacman.surf, pacman.rect)
+    screen.blit(fiende.surf, fiende.rect)
 
     # update player position
     pressed_key = pygame.key.get_pressed()
     pacman.moveUpdate(pressed_key, speed)
+    
+    # Update enemy positions
+    fiende.moveFiende(speed)
 
     pygame.display.flip()
     # set frame rate to 30
