@@ -44,7 +44,8 @@ class PacMan(pygame.sprite.Sprite):
         super(PacMan, self).__init__()
         self.surf = pygame.Surface((25, 25))
         self.surf.fill((0, 0, 255))
-        self.rect = self.surf.get_rect()
+        self.rect = self.surf.get_rect(center = (WINDOW_WIDTH/2, WINDOW_HEIGHT/2))
+        
 
 #create movment for the player 
     def moveUpdate(self, d, speed):
@@ -58,7 +59,16 @@ class PacMan(pygame.sprite.Sprite):
             self.rect.move_ip(-speed, 0)
         if d == 3:
             self.rect.move_ip(speed, 0)
-
+#borders around the world
+    def borders(self):
+        if self.rect.left <= 0:
+            self.rect.left = 0
+        if self.rect.right >= WINDOW_WIDTH:
+            self.rect.right = WINDOW_WIDTH
+        if self.rect.top <= 0:
+            self.rect.top = 0
+        if self.rect.bottom >= WINDOW_HEIGHT:
+            self.rect.bottom = WINDOW_HEIGHT
 
 pacman = PacMan()
 speed = 10
@@ -80,6 +90,9 @@ while running:
 
     #move in a direction with a speed
     pacman.moveUpdate(direction, speed)
+    
+    #traps player in hell
+    pacman.borders()
 
     #set direction of movement
     if pressed_key[K_UP]:
@@ -92,6 +105,6 @@ while running:
         direction = 3
 
     pygame.display.flip()
-    
+
     # set frame rate to 30
     clock.tick(30)
