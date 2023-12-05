@@ -9,9 +9,19 @@ from pygame.locals import (
     KEYDOWN,
     QUIT
 )
+
 import math
+
 ''' Initialiserer Pygame som Library og funksjon '''
 pygame.init()
+
+current_folder = os.path.dirname(os.path.abspath(__file__))
+assets_folder = os.path.join(current_folder, "assets")
+
+# Load image from the assets folder
+image_file = "pacman.png"
+image_path = os.path.join(assets_folder, image_file)
+image = pygame.image.load(image_path)
 
 # Vindu Høyde og bredde
 WINDOW_HEIGHT = 650
@@ -28,10 +38,12 @@ COLOR_BLACK = (0, 0, 0)
 COLOR_RED = (255, 0, 0)
 COLOR_YELLOW = (253, 255, 0)
 COLOR_BLUE = (0, 0 ,255)
+
 color= COLOR_BLUE
 color = COLOR_BLUE
 
 screen = pygame.display.set_mode([WINDOW_WIDTH, WINDOW_HEIGHT])
+
 ''' CLASSES '''
 # Spiller classen
 class PacMan(pygame.sprite.Sprite):
@@ -41,6 +53,7 @@ class PacMan(pygame.sprite.Sprite):
         self.surf = pygame.Surface((25, 25))
         self.surf.fill((0, 0, 255))
         self.rect = self.surf.get_rect()
+
 #create movment for the player 
     def moveUpdate(self, d, speed):
         if d == 0:
@@ -52,10 +65,10 @@ class PacMan(pygame.sprite.Sprite):
         if d == 3:
             self.rect.move_ip(speed, 0)
 
+
 pacman = PacMan()
 speed = 10
 running = True
-direction = 0
 ''' HOVED LOOPEN '''
 while running:
     for event in pygame.event.get():
