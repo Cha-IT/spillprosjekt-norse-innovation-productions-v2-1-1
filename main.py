@@ -16,14 +16,6 @@ import math
 ''' Initialiserer Pygame som Library og funksjon '''
 pygame.init()
 
-current_folder = os.path.dirname(os.path.abspath(__file__))
-assets_folder = os.path.join(current_folder, "assets")
-
-# Load image from the assets folder
-image_file = "pacman.png"
-image_path = os.path.join(assets_folder, image_file)
-image = pygame.image.load(image_path)
-
 # Vindu Høyde og bredde
 WINDOW_HEIGHT = 650
 WINDOW_WIDTH = 650
