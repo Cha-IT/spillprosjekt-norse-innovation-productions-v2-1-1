@@ -1,9 +1,8 @@
 ''' Importerer forskjellige libraries inn i vårt spill '''
 import pygame
-
 import score
-import os
 import fiender
+import walls
 
 from pygame.locals import (
     K_ESCAPE,
@@ -77,6 +76,7 @@ class PacMan(pygame.sprite.Sprite):
 pacman = PacMan()
 Score = score.Score()
 fiende = fiender.Fiende()
+wall = walls.Walls()
 speed = 10
 running = True
 direction = -1
@@ -96,9 +96,10 @@ while running:
     #score
     score.score_instance(Score, screen, WINDOW_WIDTH)
 
-    # Show and upadte player and enemies
+    # Show and upadte player and enemies and walls
     screen.blit(pacman.surf, pacman.rect)
     screen.blit(fiende.surf, fiende.rect)
+    screen.blit(wall.surf, wall.rect)
 
     # update player position
     pressed_key = pygame.key.get_pressed()
