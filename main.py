@@ -72,6 +72,17 @@ class PacMan(pygame.sprite.Sprite):
             self.rect.top = 0
         if self.rect.bottom >= WINDOW_HEIGHT:
             self.rect.bottom = WINDOW_HEIGHT
+    
+#collide with non killing stuff
+    def collideD(self, d, moveBack):
+        if d == 0:
+            self.rect.top += moveBack
+        if d == 1:
+            self.rect.bottom -= moveBack
+        if d == 2:
+            self.rect.left += moveBack
+        if d == 3:
+            self.rect.right -= moveBack
 
 pacman = PacMan()
 Score = score.Score()
@@ -81,6 +92,17 @@ speed = 10
 running = True
 direction = -1
 points = 0
+
+#sprite groupes
+all_sprites = pygame.sprite.Group()
+Walls = pygame.sprite.Group()
+#add to all sprites
+all_sprites.add(wall)
+all_sprites.add(pacman)
+all_sprites.add(fiende)
+#specific
+Walls.add(wall)
+
 
 pygame.time.set_timer(100, 100)
 
@@ -96,13 +118,17 @@ while running:
     #score
     score.score_instance(Score, screen, WINDOW_WIDTH)
 
-    # Show and upadte player and enemies and walls
-    screen.blit(pacman.surf, pacman.rect)
-    screen.blit(fiende.surf, fiende.rect)
-    screen.blit(wall.surf, wall.rect)
+    # draw all sprites
+    for entity in all_sprites:
+        screen.blit(entity.surf, entity.rect)
 
     # update player position
     pressed_key = pygame.key.get_pressed()
+
+    #collide with walls
+    if pygame.sprite.spritecollideany(pacman, Walls):
+        pacman.collideD(direction, speed)
+        direction = -1
 
     #move in a direction with a speed
     pacman.moveUpdate(direction, speed)
