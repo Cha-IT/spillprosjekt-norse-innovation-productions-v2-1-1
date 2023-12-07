@@ -2,7 +2,6 @@
 import pygame
 import score
 import fiender
-import walls
 
 from pygame.locals import (
     K_ESCAPE,
@@ -84,10 +83,35 @@ class PacMan(pygame.sprite.Sprite):
         if d == 3:
             self.rect.right -= moveBack
 
+class Walls(pygame.sprite.Sprite):
+    def __init__(self):
+        super(Walls, self).__init__() 
+        self.surf = pygame.Surface((0, 0))
+        self.surf.fill((255, 255, 255))
+        self.rect = self.surf.get_rect(center = (100,100))
+
+
+    def wallSelect(screen):
+        for i in wallList:
+            newWall = Walls()
+            newWall.surf = pygame.Surface((i['width'], i['hight']))
+            newWall.surf.fill((255, 255, 255))
+            newWall.rect = newWall.surf.get_rect(center = (i['x'], i['y']))
+            screen.blit(newWall.surf, newWall.rect)
+            WallsG.add(newWall)
+
+wallList = [{'width': 200, 'hight': 25, 'x': 200, 'y': 100},
+            {'width': 25, 'hight': 200, 'x': 500, 'y': 300},
+            {'width': 300, 'hight': 25, 'x': 600, 'y': 600},
+            {'width': 25, 'hight': 100, 'x': 300, 'y': 200},
+]
+
+
+
 pacman = PacMan()
 Score = score.Score()
 fiende = fiender.Fiende()
-wall = walls.Walls()
+
 speed = 10
 running = True
 direction = -1
@@ -95,13 +119,13 @@ points = 0
 
 #sprite groupes
 all_sprites = pygame.sprite.Group()
-Walls = pygame.sprite.Group()
+WallsG = pygame.sprite.Group()
 #add to all sprites
-all_sprites.add(wall)
 all_sprites.add(pacman)
 all_sprites.add(fiende)
 #specific
-Walls.add(wall)
+
+
 
 
 pygame.time.set_timer(100, 100)
@@ -112,11 +136,15 @@ while running:
         if event.type == QUIT:
             running = False
     #fill background
-    screen.fill(COLOR_BLACK)       
+    screen.fill(COLOR_BLACK)   
 
 
     #score
-    score.score_instance(Score, screen, WINDOW_WIDTH)
+    score.score_instance(Score, screen, WINDOW_WIDTH)   
+
+    #print walls
+    Walls.wallSelect(screen)
+    
 
     # draw all sprites
     for entity in all_sprites:
@@ -126,7 +154,7 @@ while running:
     pressed_key = pygame.key.get_pressed()
 
     #collide with walls
-    if pygame.sprite.spritecollideany(pacman, Walls):
+    if pygame.sprite.spritecollideany(pacman, WallsG):
         pacman.collideD(direction, speed)
         direction = -1
 
