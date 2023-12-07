@@ -100,10 +100,12 @@ class Walls(pygame.sprite.Sprite):
             screen.blit(newWall.surf, newWall.rect)
             WallsG.add(newWall)
 
-wallList = [{'width': 200, 'hight': 25, 'x': 200, 'y': 100},
-            {'width': 25, 'hight': 200, 'x': 500, 'y': 300},
-            {'width': 300, 'hight': 25, 'x': 600, 'y': 600},
-            {'width': 25, 'hight': 100, 'x': 300, 'y': 200},
+wallList = [{'width': 150, 'hight': 25, 'x': 250, 'y': 100},
+            {'width': 25, 'hight': 150, 'x': 100, 'y': 250},
+            {'width': 150, 'hight': 25, 'x': 400, 'y': 550},
+            {'width': 25, 'hight': 150, 'x': 550, 'y': 400},
+            {'width': 25, 'hight': 150, 'x': 325, 'y': 325},            
+            {'width': 150, 'hight': 25, 'x': 325, 'y': 325},
 ]
 
 
