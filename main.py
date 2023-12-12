@@ -3,6 +3,7 @@ import pygame
 import score
 import fiender
 import spiller
+import walls
 
 from pygame.locals import (
     K_ESCAPE,
@@ -25,6 +26,10 @@ WINDOW_WIDTH = 650
 
 clock = pygame.time.Clock()
 
+bg = pygame.image.load('images\dackground.png')
+bg = pygame.transform.scale(bg, (650, 650))
+
+
 PI = math.pi
 
 # Fargepalett
@@ -38,33 +43,6 @@ color = COLOR_BLUE
 
 screen = pygame.display.set_mode([WINDOW_WIDTH, WINDOW_HEIGHT])
 
-''' CLASSES '''
-
-#there are no gates here
-class Walls(pygame.sprite.Sprite):
-    def __init__(self):
-        super(Walls, self).__init__() 
-        self.surf = pygame.Surface((0, 0))
-        self.surf.fill((255, 255, 255))
-        self.rect = self.surf.get_rect(center = (100,100))
-
-#makes new wall based on the wallList
-    def wallSelect(screen):
-        for i in wallList:
-            newWall = Walls()
-            newWall.surf = pygame.Surface((i['width'], i['hight']))
-            newWall.surf.fill((255, 255, 255))
-            newWall.rect = newWall.surf.get_rect(center = (i['x'], i['y']))
-            screen.blit(newWall.surf, newWall.rect)
-            WallsG.add(newWall)
-
-wallList = [{'width': 150, 'hight': 25, 'x': 250, 'y': 100},
-            {'width': 25, 'hight': 150, 'x': 100, 'y': 250},
-            {'width': 150, 'hight': 25, 'x': 400, 'y': 550},
-            {'width': 25, 'hight': 150, 'x': 550, 'y': 400},
-            {'width': 25, 'hight': 150, 'x': 325, 'y': 325},            
-            {'width': 150, 'hight': 25, 'x': 325, 'y': 325},
-]
 #variables
 Score = score.Score()
 fiende = fiender.Fiende()
@@ -92,24 +70,26 @@ while running:
             running = False
     #fill background
     screen.fill(COLOR_BLACK)   
-
+    screen.blit(bg, (0,0))
     #score
     score.score_instance(Score, screen, WINDOW_WIDTH)   
 
     #print walls
-    Walls.wallSelect(screen)
     
-    # draw all sprites
-    for entity in all_sprites:
-        screen.blit(entity.surf, entity.rect)
-
-    # update player position
-    pressed_key = pygame.key.get_pressed()
+    walls.Walls.wallSelect(screen, WallsG)
 
     #collide with walls
     if pygame.sprite.spritecollideany(pacman, WallsG):
         pacman.collideD(direction, speed)
-        direction = -1
+        direction = -1    
+
+    # draw all sprites
+    for entity in all_sprites:
+        screen.blit(entity.surf, entity.rect)
+    screen.blit(spiller.pbg, (pacman.rect.left, pacman.rect.top))  
+
+    # update player position
+    pressed_key = pygame.key.get_pressed()
 
     #move in a direction with a speed
     pacman.moveUpdate(direction, speed)
