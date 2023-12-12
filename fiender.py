@@ -30,8 +30,8 @@ class Fiende(pygame.sprite.Sprite):
         self.surf = pygame.Surface((25, 25))
         self.surf.fill((COLOR_RED))
         self.rect = self.surf.get_rect()
-        self.xspeed = 3
-        self.yspeed = 2
+        self.xspeed = 4
+        self.yspeed = 6
 
     def moveFiende(self, pac_man_rect, speed):
         # distancex and distancey is being calculated between pacman and the enemy
@@ -42,13 +42,22 @@ class Fiende(pygame.sprite.Sprite):
             dx, dy = dx / dist, dy / dist
             self.rect.x += dx * self.xspeed
             self.rect.y += dy * self.yspeed
-        
-        # Restricts the enemy from going out of the map
-        if self.rect.left <= 0 or self.rect.right >= WINDOW_WIDTH:
-            self.xspeed = -self.xspeed
 
-        if self.rect.top <= 0 or self.rect.bottom >= WINDOW_HEIGHT:
-            self.yspeed = -self.yspeed
+        # Checks through the absolute value of dx and dy and if dx is a higher number 
+        # it adjusts the movement to follow 90-degree angles to have a similiar movement as the player
+        if abs(dx) > abs(dy):
+            # Snaps the player in increments of 25 degress in y-direction
+            self.rect.y = round(self.rect.y / 25) * 25
+
+            # Handles collisions with the map / window width and height
+            self.rect.clamp_ip(pygame.Rect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT))
+        else:
+            # Snaps the player in increments of 25 degress in x-direction
+            self.rect.x = round(self.rect.x / 25) * 25
+
+            # Handle collisions with THE MAP / WINDOW WIDTH AND HEIGHT
+            self.rect.clamp_ip(pygame.Rect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT))
+        
 
             
 

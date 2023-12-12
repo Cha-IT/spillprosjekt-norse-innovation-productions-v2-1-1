@@ -114,8 +114,8 @@ while running:
     #move in a direction with a speed
     pacman.moveUpdate(direction, speed)
 
-    #restricts player from moving outside of the map
-    pacman.borders()
+    #restricts player from moving outside of the map - OLD Method look at spiller.py documentation
+    #pacman.borders()
 
     #set direction of movement
     if pressed_key[K_UP]:
