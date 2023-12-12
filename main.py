@@ -2,6 +2,8 @@
 import pygame
 import score
 import math
+import spiller
+import fiender
 from spiller import PacMan
 from fiender import Fiende
 from walls import Walls
@@ -78,6 +80,11 @@ while running:
     #score
     score.score_instance(Score, screen, WINDOW_WIDTH)
 
+    #collide with walls
+    if pygame.sprite.spritecollideany(pacman, walls_group):
+        pacman.collideD(direction, speed)
+        direction = -1
+        
     #Prints the walls
     Walls.wallSelect(screen, walls_group)  # Pass walls_group as an argument
 
@@ -90,16 +97,13 @@ while running:
     #    screen.blit(entity.surf, entity.rect)
     
     #print walls
-    walls.Walls.wallSelect(screen, WallsG)
+    Walls.wallSelect(screen, walls_group)
   
-    #collide with walls
-    if pygame.sprite.spritecollideany(pacman, walls_group):
-        pacman.collideD(direction, speed)
-        direction = -1
+
   
     # draw all sprites
     for entity in all_sprites:
-        screen.blit(entity.surf, entity.rect)
+        screen.blit(entity.image, entity.rect)
     screen.blit(spiller.pbg, (pacman.rect.left, pacman.rect.top))  
     screen.blit(fiender.fbg, (fiende.rect.left, fiende.rect.top))  
 
