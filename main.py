@@ -53,17 +53,37 @@ class Walls(pygame.sprite.Sprite):
         for i in wallList:
             newWall = Walls()
             newWall.surf = pygame.Surface((i['width'], i['hight']))
-            newWall.surf.fill((255, 255, 255))
+            newWall.surf.fill((0, 0, 255))
             newWall.rect = newWall.surf.get_rect(center = (i['x'], i['y']))
             screen.blit(newWall.surf, newWall.rect)
             WallsG.add(newWall)
 
-wallList = [{'width': 150, 'hight': 25, 'x': 250, 'y': 100},
-            {'width': 25, 'hight': 150, 'x': 100, 'y': 250},
-            {'width': 150, 'hight': 25, 'x': 400, 'y': 550},
-            {'width': 25, 'hight': 150, 'x': 550, 'y': 400},
-            {'width': 25, 'hight': 150, 'x': 325, 'y': 325},            
-            {'width': 150, 'hight': 25, 'x': 325, 'y': 325},
+wt = 20
+
+wallList = [{'width': 120, 'hight': wt, 'x': 250, 'y': 100-wt/2},
+            {'width': wt, 'hight': 120, 'x': 100, 'y': 250},
+            {'width': 120, 'hight': wt, 'x': 400, 'y': 550-wt/2},
+            {'width': wt, 'hight': 120, 'x': 550-wt/2, 'y': 400},
+            {'width': wt*2, 'hight': 120, 'x': 325, 'y': 325},            
+            {'width': 120, 'hight': wt*2, 'x': 325, 'y': 325},
+            {'width': 120, 'hight': wt, 'x': 275-60, 'y': 275-wt/2},
+            {'width': wt, 'hight': 120, 'x': 275-wt/2, 'y': 275-60},
+            {'width': 120, 'hight': wt, 'x': 275-60, 'y': 275-wt/2},
+            {'width': 120, 'hight': wt, 'x': 395-60+100, 'y': 275-wt/2},
+            {'width': wt, 'hight': 120, 'x': 345-wt/2+50, 'y': 275-60},
+            {'width': wt, 'hight': 120, 'x': 275-wt/2, 'y': 275+100+60},
+            {'width': 120, 'hight': wt, 'x': 275-60, 'y': 275+120-wt/2},
+            {'width': 120, 'hight': wt, 'x': 395-60+100, 'y': 275+120-wt/2},
+            {'width': wt, 'hight': 120, 'x': 345-wt/2+50, 'y': 275+100+60},
+            {'width': wt*2, 'hight': wt*2, 'x': 395+120-70, 'y': 275+120+50},
+            {'width': wt*2, 'hight': wt*2, 'x': 395-70, 'y': 275+120+50},
+            {'width': wt*2, 'hight': wt*2, 'x': 395+120-70, 'y': 275+50},
+            {'width': wt*2, 'hight': wt*2, 'x': 395+120-70, 'y': 275-120+50},
+            {'width': wt*2, 'hight': wt*2, 'x': 395-70, 'y': 275-120+50},
+            {'width': wt*2, 'hight': wt*2, 'x': 395-120-70, 'y': 275-120+50},
+            {'width': wt*2, 'hight': wt*2, 'x': 395-120-70, 'y': 275+50},
+            {'width': wt*2, 'hight': wt*2, 'x': 395-120-70, 'y': 275+120+50},
+            
 ]
 #variables
 Score = score.Score()
@@ -98,6 +118,11 @@ while running:
 
     #print walls
     Walls.wallSelect(screen)
+
+        #collide with walls
+    if pygame.sprite.spritecollideany(pacman, WallsG):
+        pacman.collideD(direction, speed)
+        direction = -1
     
     # draw all sprites
     for entity in all_sprites:
@@ -106,10 +131,7 @@ while running:
     # update player position
     pressed_key = pygame.key.get_pressed()
 
-    #collide with walls
-    if pygame.sprite.spritecollideany(pacman, WallsG):
-        pacman.collideD(direction, speed)
-        direction = -1
+
 
     #move in a direction with a speed
     pacman.moveUpdate(direction, speed)
