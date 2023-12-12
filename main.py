@@ -1,9 +1,10 @@
 ''' Importerer forskjellige libraries inn i vårt spill '''
 import pygame
 import score
-import fiender
-import spiller
-import walls
+import math
+from spiller import PacMan
+from fiender import Fiende
+from walls import Walls
 
 from pygame.locals import (
     K_ESCAPE,
@@ -15,7 +16,6 @@ from pygame.locals import (
     QUIT
 )
 
-import math
 
 ''' Initialiserer Pygame som Library og funksjon '''
 pygame.init()
@@ -43,13 +43,8 @@ color = COLOR_BLUE
 
 screen = pygame.display.set_mode([WINDOW_WIDTH, WINDOW_HEIGHT])
 
+
 #variables
-Score = score.Score()
-fiende = fiender.Fiende()
-speed = 10
-pacman = spiller.PacMan()
-Score = score.Score()
-fiende = fiender.Fiende()
 speed = 6
 running = True
 direction = -1
@@ -57,38 +52,57 @@ points = 0
 
 #sprite groupes
 all_sprites = pygame.sprite.Group()
-WallsG = pygame.sprite.Group()
+walls_group = pygame.sprite.Group()
+
+# Call wallSelect using Walls.wallist
+Walls.wallSelect(screen, walls_group)
+
+#Creates instances of Score, PacMan and Fiende
+Score = score.Score()
+fiende = Fiende()
+pacman = PacMan()
+
 #add to all sprites
 all_sprites.add(pacman)
 all_sprites.add(fiende)
-#specific
 
 ''' HOVED LOOPEN '''
 while running:
     for event in pygame.event.get():
         if event.type == QUIT:
             running = False
+    
     #fill background
     screen.fill(COLOR_BLACK)   
     screen.blit(bg, (0,0))
     #score
-    score.score_instance(Score, screen, WINDOW_WIDTH)   
+    score.score_instance(Score, screen, WINDOW_WIDTH)
 
-    #print walls
+    #Prints the walls
+    Walls.wallSelect(screen, walls_group)  # Pass walls_group as an argument
+
+    # Draws all the sprites on the screen
+    all_sprites.update()
+    all_sprites.draw(screen)
+
+    # draw all sprites
+    #for entity in all_sprites:
+    #    screen.blit(entity.surf, entity.rect)
     
+    #print walls
     walls.Walls.wallSelect(screen, WallsG)
-
+  
     #collide with walls
-    if pygame.sprite.spritecollideany(pacman, WallsG):
+    if pygame.sprite.spritecollideany(pacman, walls_group):
         pacman.collideD(direction, speed)
-        direction = -1    
-
+        direction = -1
+  
     # draw all sprites
     for entity in all_sprites:
         screen.blit(entity.surf, entity.rect)
     screen.blit(spiller.pbg, (pacman.rect.left, pacman.rect.top))  
 
-    # update player position
+    # update player positions
     pressed_key = pygame.key.get_pressed()
 
     #move in a direction with a speed
@@ -110,7 +124,7 @@ while running:
     pacman.moveUpdate(pressed_key, speed)
     
     # Update enemy positions & make the enemy follow the pacman sprite
-    fiende.moveFiende(pacman.rect, speed)
+    fiende.moveFiende(pacman.rect)
 
     pygame.display.flip()
 
