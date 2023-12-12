@@ -15,6 +15,9 @@ from pygame.locals import (
 WINDOW_HEIGHT = 650
 WINDOW_WIDTH = 650
 
+fbg = pygame.image.load('images\enemy.png')
+fbg = pygame.transform.scale(fbg,(25,25))
+
 # Fargepalett
 COLOR_WHITE = (255, 255, 255)
 COLOR_BLACK = (0, 0, 0)

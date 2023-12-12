@@ -87,6 +87,7 @@ while running:
     for entity in all_sprites:
         screen.blit(entity.surf, entity.rect)
     screen.blit(spiller.pbg, (pacman.rect.left, pacman.rect.top))  
+    screen.blit(fiender.fbg, (fiende.rect.left, fiende.rect.top))  
 
     # update player position
     pressed_key = pygame.key.get_pressed()
