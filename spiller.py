@@ -46,18 +46,21 @@ class PacMan(pygame.sprite.Sprite):
             self.rect.move_ip(-speed, 0)
         if d == 3:
             self.rect.move_ip(speed, 0)
+        
+        self.rect.clamp_ip(pygame.Rect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT))
 
+# First method we used, however it got changed out with something more effective and shorter
 
 #borders around the world
-    def borders(self):
-        if self.rect.left <= 0:
-            self.rect.left = 0
-        if self.rect.right >= WINDOW_WIDTH:
-            self.rect.right = WINDOW_WIDTH
-        if self.rect.top <= 0:
-            self.rect.top = 0
-        if self.rect.bottom >= WINDOW_HEIGHT:
-            self.rect.bottom = WINDOW_HEIGHT
+    #def borders(self):
+    #    if self.rect.left <= 0:
+    #        self.rect.left = 0
+    #    if self.rect.right >= WINDOW_WIDTH:
+    #        self.rect.right = WINDOW_WIDTH
+    #    if self.rect.top <= 0:
+    #        self.rect.top = 0
+    #    if self.rect.bottom >= WINDOW_HEIGHT:
+    #        self.rect.bottom = WINDOW_HEIGHT
 
     #collide with non killing stuff
     def collideD(self, d, moveBack):
