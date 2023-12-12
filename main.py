@@ -76,7 +76,7 @@ while running:
     #move in a direction with a speed
     pacman.moveUpdate(direction, speed)
 
-    #traps player in hell
+    #restricts player from moving outside of the map
     pacman.borders()
 
     #set direction of movement
@@ -91,8 +91,8 @@ while running:
 
     pacman.moveUpdate(pressed_key, speed)
     
-    # Update enemy positions
-    fiende.moveFiende(speed)
+    # Update enemy positions & make the enemy follow the pacman sprite
+    fiende.moveFiende(pacman.rect, speed)
 
     pygame.display.flip()
 

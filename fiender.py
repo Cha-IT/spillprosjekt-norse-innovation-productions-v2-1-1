@@ -1,5 +1,7 @@
 ''' Importerer forskjellige libraries inn i vårt spill '''
 import pygame
+import math
+import spiller
 from pygame.locals import (
     K_ESCAPE,
     K_DOWN,
@@ -31,19 +33,17 @@ class Fiende(pygame.sprite.Sprite):
         self.xspeed = 3
         self.yspeed = 2
 
-    # def moveFiende(self, speed):
-    #     dx, dy = PacMan.rect.x - self.rect.x, PacMan.rect.y - self.rect.y
-    #     dist = math.hypot(dx, dy)
-    #     dx, dy = dx / dist, dy / dist
-
-    #     self.rect.x += self.speed
-    #     self.rect.y += self.speed
-
-    def moveFiende(self, speed):
-        self.rect.move_ip(self.xspeed, self.yspeed)
-        #dx, dy = PacMan.rect.x - self.rect.x, PacMan.rect.y - self.rect.y
-        #print(dx)
+    def moveFiende(self, pac_man_rect, speed):
+        # distancex and distancey is being calculated between pacman and the enemy
+        dx, dy = pac_man_rect.x - self.rect.x, pac_man_rect.y - self.rect.y
+        dist = math.hypot(dx, dy)
+        # Makes the player follow the pacman figure and calculates distance throughout the whole game.
+        if dist > 0:
+            dx, dy = dx / dist, dy / dist
+            self.rect.x += dx * self.xspeed
+            self.rect.y += dy * self.yspeed
         
+        # Restricts the enemy from going out of the map
         if self.rect.left <= 0 or self.rect.right >= WINDOW_WIDTH:
             self.xspeed = -self.xspeed
 
