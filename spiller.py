@@ -53,3 +53,14 @@ class PacMan(pygame.sprite.Sprite):
             self.rect.top = 0
         if self.rect.bottom >= WINDOW_HEIGHT:
             self.rect.bottom = WINDOW_HEIGHT
+
+    #collide with non killing stuff
+    def collideD(self, d, moveBack):
+        if d == 0:
+            self.rect.top += moveBack
+        if d == 1:
+            self.rect.bottom -= moveBack
+        if d == 2:
+            self.rect.left += moveBack
+        if d == 3:
+            self.rect.right -= moveBack
