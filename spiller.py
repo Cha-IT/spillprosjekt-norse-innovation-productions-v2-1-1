@@ -12,6 +12,9 @@ COLOR_BLUE = (0, 0 ,255)
 WINDOW_HEIGHT = 650
 WINDOW_WIDTH = 650
 
+pbg = pygame.image.load('images\player.png')
+pbg = pygame.transform.scale(pbg,(25,25))
+
 # Spiller classen
 class PacMan(pygame.sprite.Sprite):
 #create player hight width color and shape
@@ -20,9 +23,9 @@ class PacMan(pygame.sprite.Sprite):
         self.image = pygame.Surface((25, 25))
         self.image.fill((COLOR_YELLOW))
         self.rect = self.image.get_rect()
-        
+
 #create movment for the player 
-    def moveUpdate(self, d, speed):
+    def moveUpdate(self, d, speed):      
         if d == -1:
             self.rect.move_ip(0, 0)
         if d == 0:

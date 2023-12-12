@@ -26,6 +26,10 @@ WINDOW_WIDTH = 650
 
 clock = pygame.time.Clock()
 
+bg = pygame.image.load('images\dackground.png')
+bg = pygame.transform.scale(bg, (650, 650))
+
+
 PI = math.pi
 
 # Fargepalett
@@ -70,7 +74,7 @@ while running:
     
     #fill background
     screen.fill(COLOR_BLACK)   
-
+    screen.blit(bg, (0,0))
     #score
     score.score_instance(Score, screen, WINDOW_WIDTH)
 
@@ -84,14 +88,22 @@ while running:
     # draw all sprites
     #for entity in all_sprites:
     #    screen.blit(entity.surf, entity.rect)
-
-    # update player positions
-    pressed_key = pygame.key.get_pressed()
-
+    
+    #print walls
+    walls.Walls.wallSelect(screen, WallsG)
+  
     #collide with walls
     if pygame.sprite.spritecollideany(pacman, walls_group):
         pacman.collideD(direction, speed)
         direction = -1
+  
+    # draw all sprites
+    for entity in all_sprites:
+        screen.blit(entity.surf, entity.rect)
+    screen.blit(spiller.pbg, (pacman.rect.left, pacman.rect.top))  
+
+    # update player positions
+    pressed_key = pygame.key.get_pressed()
 
     #move in a direction with a speed
     pacman.moveUpdate(direction, speed)
