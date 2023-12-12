@@ -30,6 +30,7 @@ class PacMan(pygame.sprite.Sprite):
         self.surf = pygame.Surface((25, 25))
         self.surf.fill((COLOR_YELLOW))
         self.rect = self.surf.get_rect()
+        
 #create movment for the player 
     def moveUpdate(self, d, speed):
         if d == -1:
@@ -42,14 +43,28 @@ class PacMan(pygame.sprite.Sprite):
             self.rect.move_ip(-speed, 0)
         if d == 3:
             self.rect.move_ip(speed, 0)
+        
+        self.rect.clamp_ip(pygame.Rect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT))
 
+# First method we used, however it got changed out with something more effective and shorter
 #borders around the world
-    def borders(self):
-        if self.rect.left <= 0:
-            self.rect.left = 0
-        if self.rect.right >= WINDOW_WIDTH:
-            self.rect.right = WINDOW_WIDTH
-        if self.rect.top <= 0:
-            self.rect.top = 0
-        if self.rect.bottom >= WINDOW_HEIGHT:
-            self.rect.bottom = WINDOW_HEIGHT
+    #def borders(self):
+    #    if self.rect.left <= 0:
+    #        self.rect.left = 0
+    #    if self.rect.right >= WINDOW_WIDTH:
+    #        self.rect.right = WINDOW_WIDTH
+    #    if self.rect.top <= 0:
+    #        self.rect.top = 0
+    #    if self.rect.bottom >= WINDOW_HEIGHT:
+    #        self.rect.bottom = WINDOW_HEIGHT
+
+    #collide with non killing stuff
+    def collideD(self, d, moveBack):
+        if d == 0:
+            self.rect.top += moveBack
+        if d == 1:
+            self.rect.bottom -= moveBack
+        if d == 2:
+            self.rect.left += moveBack
+        if d == 3:
+            self.rect.right -= moveBack
