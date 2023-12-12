@@ -28,14 +28,27 @@ class Fiende(pygame.sprite.Sprite):
         self.surf = pygame.Surface((25, 25))
         self.surf.fill((COLOR_RED))
         self.rect = self.surf.get_rect()
-        self.speed = 3
+        self.xspeed = 3
+        self.yspeed = 2
 
+    # def moveFiende(self, speed):
+    #     dx, dy = PacMan.rect.x - self.rect.x, PacMan.rect.y - self.rect.y
+    #     dist = math.hypot(dx, dy)
+    #     dx, dy = dx / dist, dy / dist
+
+    #     self.rect.x += self.speed
+    #     self.rect.y += self.speed
 
     def moveFiende(self, speed):
-        self.rect.move_ip(self.speed, 0)
+        self.rect.move_ip(self.xspeed, self.yspeed)
+        #dx, dy = PacMan.rect.x - self.rect.x, PacMan.rect.y - self.rect.y
+        #print(dx)
         
         if self.rect.left <= 0 or self.rect.right >= WINDOW_WIDTH:
-            self.speed = -self.speed
+            self.xspeed = -self.xspeed
+
+        if self.rect.top <= 0 or self.rect.bottom >= WINDOW_HEIGHT:
+            self.yspeed = -self.yspeed
 
             
 

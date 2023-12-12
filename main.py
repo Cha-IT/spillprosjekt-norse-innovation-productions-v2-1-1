@@ -2,6 +2,7 @@
 import pygame
 import score
 import fiender
+import spiller
 
 from pygame.locals import (
     K_ESCAPE,
@@ -40,6 +41,7 @@ color = COLOR_BLUE
 screen = pygame.display.set_mode([WINDOW_WIDTH, WINDOW_HEIGHT])
 
 ''' CLASSES '''
+
 # Spiller classen
 class PacMan(pygame.sprite.Sprite):
 #create player hight width color and shape
@@ -115,6 +117,13 @@ Score = score.Score()
 fiende = fiender.Fiende()
 
 speed = 10
+
+
+pacman = spiller.PacMan()
+Score = score.Score()
+fiende = fiender.Fiende()
+speed = 6
+
 running = True
 direction = -1
 points = 0
