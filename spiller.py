@@ -30,6 +30,7 @@ class PacMan(pygame.sprite.Sprite):
         self.surf = pygame.Surface((25, 25))
         self.surf.fill((COLOR_YELLOW))
         self.rect = self.surf.get_rect()
+        
 #create movment for the player 
     def moveUpdate(self, d, speed):
         if d == -1:

@@ -25,7 +25,6 @@ WINDOW_WIDTH = 650
 
 clock = pygame.time.Clock()
 
-
 PI = math.pi
 
 # Fargepalett
@@ -35,14 +34,13 @@ COLOR_RED = (255, 0, 0)
 COLOR_YELLOW = (253, 255, 0)
 COLOR_BLUE = (0, 0 ,255)
 
-color= COLOR_BLUE
 color = COLOR_BLUE
 
 screen = pygame.display.set_mode([WINDOW_WIDTH, WINDOW_HEIGHT])
 
 ''' CLASSES '''
 
-
+#there are no gates here
 class Walls(pygame.sprite.Sprite):
     def __init__(self):
         super(Walls, self).__init__() 
@@ -50,7 +48,7 @@ class Walls(pygame.sprite.Sprite):
         self.surf.fill((255, 255, 255))
         self.rect = self.surf.get_rect(center = (100,100))
 
-
+#makes new wall based on the wallList
     def wallSelect(screen):
         for i in wallList:
             newWall = Walls()
@@ -67,18 +65,14 @@ wallList = [{'width': 150, 'hight': 25, 'x': 250, 'y': 100},
             {'width': 25, 'hight': 150, 'x': 325, 'y': 325},            
             {'width': 150, 'hight': 25, 'x': 325, 'y': 325},
 ]
-
+#variables
 Score = score.Score()
 fiende = fiender.Fiende()
-
 speed = 10
-
-
 pacman = spiller.PacMan()
 Score = score.Score()
 fiende = fiender.Fiende()
 speed = 6
-
 running = True
 direction = -1
 points = 0
@@ -91,11 +85,6 @@ all_sprites.add(pacman)
 all_sprites.add(fiende)
 #specific
 
-
-
-
-pygame.time.set_timer(100, 100)
-
 ''' HOVED LOOPEN '''
 while running:
     for event in pygame.event.get():
@@ -104,14 +93,12 @@ while running:
     #fill background
     screen.fill(COLOR_BLACK)   
 
-
     #score
     score.score_instance(Score, screen, WINDOW_WIDTH)   
 
     #print walls
     Walls.wallSelect(screen)
     
-
     # draw all sprites
     for entity in all_sprites:
         screen.blit(entity.surf, entity.rect)
