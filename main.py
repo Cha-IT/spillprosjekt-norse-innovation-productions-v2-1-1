@@ -28,10 +28,11 @@ WINDOW_WIDTH = 650
 
 clock = pygame.time.Clock()
 
+# Bakgrunnsteksturer
 bg = pygame.image.load('images\dackground.png')
 bg = pygame.transform.scale(bg, (650, 650))
 
-
+# Definerer PI med bruk av Matte lib.
 PI = math.pi
 
 # Fargepalett
@@ -80,43 +81,34 @@ while running:
     #score
     score.score_instance(Score, screen, WINDOW_WIDTH)
 
-    #collide with walls
+    #Kollisjoner med vegger for spiller
     if pygame.sprite.spritecollideany(pacman, walls_group):
         pacman.collideD(direction, speed)
         direction = -1
-        
-    #Prints the walls
-    Walls.wallSelect(screen, walls_group)  # Pass walls_group as an argument
 
     # Draws all the sprites on the screen
     all_sprites.update()
     all_sprites.draw(screen)
 
-    # draw all sprites
-    #for entity in all_sprites:
-    #    screen.blit(entity.surf, entity.rect)
     
-    #print walls
+    #Printer alle veggene ved bruk av wallSelect funksjonen.
     Walls.wallSelect(screen, walls_group)
   
 
   
-    # draw all sprites
+    # Tegner opp alle sprites
     for entity in all_sprites:
         screen.blit(entity.image, entity.rect)
-    screen.blit(spiller.pbg, (pacman.rect.left, pacman.rect.top))  
-    screen.blit(fiender.fbg, (fiende.rect.left, fiende.rect.top))  
+        screen.blit(spiller.pbg, (pacman.rect.left, pacman.rect.top))  
+        screen.blit(fiender.fbg, (fiende.rect.left, fiende.rect.top))  
 
-    # update player positions
+    # Sjekker for pressed keys og beveger spilleren
     pressed_key = pygame.key.get_pressed()
 
-    #move in a direction with a speed
+    # Moveupdate funksjonen som endrer posisjonen til spiller
     pacman.moveUpdate(direction, speed)
 
-    #restricts player from moving outside of the map - OLD Method look at spiller.py documentation
-    #pacman.borders()
-
-    #set direction of movement
+    # Definerer bevegelsen til spilleren.
     if pressed_key[K_UP]:
         direction = 0
     elif pressed_key[K_DOWN]:
@@ -125,15 +117,13 @@ while running:
         direction = 2
     elif pressed_key[K_RIGHT]:
         direction = 3
-
-    pacman.moveUpdate(pressed_key, speed)
     
-    # Update enemy positions & make the enemy follow the pacman sprite
+    # Oppdaterer fienders lokasjon og får den til å følge etter PacMan
     fiende.moveFiende(pacman.rect)
 
     pygame.display.flip()
 
-    # set frame rate to 30
+    # Setter frame rate til 30
     clock.tick(30)
     
 
