@@ -3,14 +3,6 @@ import pygame
 
 #there are no gates here
 class Walls(pygame.sprite.Sprite):
-    wallList = [{'width': 150, 'hight': 25, 'x': 250, 'y': 100},
-            {'width': 25, 'hight': 150, 'x': 100, 'y': 250},
-            {'width': 150, 'hight': 25, 'x': 400, 'y': 550},
-            {'width': 25, 'hight': 150, 'x': 550, 'y': 400},
-            {'width': 25, 'hight': 150, 'x': 325, 'y': 325},            
-            {'width': 150, 'hight': 25, 'x': 325, 'y': 325},
-    ]
-    
     def __init__(self):
         super(Walls, self).__init__() 
         self.image = pygame.Surface((0, 0))
@@ -37,10 +29,30 @@ class Walls(pygame.sprite.Sprite):
             #add wall to group for colision
             walls_group.add(newWall)
 
-wallList = [{'width': 150, 'hight': 25, 'x': 250, 'y': 100},
-            {'width': 25, 'hight': 150, 'x': 100, 'y': 250},
-            {'width': 150, 'hight': 25, 'x': 400, 'y': 550},
-            {'width': 25, 'hight': 150, 'x': 550, 'y': 400},
-            {'width': 25, 'hight': 150, 'x': 325, 'y': 325},         
-            {'width': 150, 'hight': 25, 'x': 325, 'y': 325},
+wt = 20
+
+wallList = [{'width': 370, 'hight': wt, 'x': 100+370/2, 'y': 100+wt/2},
+            {'width': wt, 'hight': 120, 'x': 100+wt/2, 'y': 250},
+            {'width': 130, 'hight': wt, 'x': 400, 'y': 550-wt/2},
+            {'width': wt, 'hight': 120, 'x': 530+wt/2, 'y': 400},
+            {'width': wt*2, 'hight': 120, 'x': 325, 'y': 325},
+            {'width': 120, 'hight': wt*2, 'x': 325, 'y': 325},
+            {'width': 120, 'hight': wt, 'x': 275-60, 'y': 275-wt/2},
+            {'width': wt, 'hight': 120, 'x': 255+wt/2, 'y': 275-60},
+            {'width': 120, 'hight': wt, 'x': 275-60, 'y': 275-wt/2},
+            {'width': 120, 'hight': wt, 'x': 395-60+100, 'y': 275-wt/2},
+            {'width': wt, 'hight': 120, 'x': 325+wt/2+50, 'y': 275-60},
+            {'width': wt, 'hight': 120, 'x': 255+wt/2, 'y': 275+100+60},
+            {'width': 120, 'hight': wt, 'x': 275-60, 'y': 275+120-wt/2},
+            {'width': 120, 'hight': wt, 'x': 395-60+100, 'y': 275+120-wt/2},
+            {'width': wt, 'hight': 120, 'x': 325+wt/2+50, 'y': 275+100+60},
+            {'width': wt*2, 'hight': wt*2, 'x': 395+120-70, 'y': 275+120+50},
+            {'width': wt*2, 'hight': wt*2, 'x': 395-70, 'y': 275+120+50},
+            {'width': wt*2, 'hight': wt*2, 'x': 395+120-70, 'y': 275+50},
+            {'width': wt*2, 'hight': wt*2, 'x': 395+120-70, 'y': 275-120+50},
+            {'width': wt*2, 'hight': wt*2, 'x': 395-70, 'y': 275-120+50},
+            {'width': wt*2, 'hight': wt*2, 'x': 395-120-70, 'y': 275-120+50},
+            {'width': wt*2, 'hight': wt*2, 'x': 395-120-70, 'y': 275+50},
+            {'width': wt*2, 'hight': wt*2, 'x': 395-120-70, 'y': 275+120+50},
+
 ]
