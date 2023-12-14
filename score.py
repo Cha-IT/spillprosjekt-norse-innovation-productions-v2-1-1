@@ -1,5 +1,6 @@
 import pygame
 
+# Score klassen som teller poenger
 class Score(object):
     def __init__(self):
         self.white = 255,255,255

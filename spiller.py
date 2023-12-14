@@ -17,14 +17,14 @@ pbg = pygame.transform.scale(pbg,(25,25))
 
 # Spiller classen
 class PacMan(pygame.sprite.Sprite):
-#create player hight width color and shape
+#Definerer spilleren, imaget og fargene.
     def __init__(self):
         super(PacMan, self).__init__()
         self.image = pygame.Surface((25, 25))
         self.image.fill((COLOR_YELLOW))
         self.rect = self.image.get_rect()
 
-#create movment for the player 
+#Oppretter bevegelse for spilleren. Starter på X & Y: 0, 0 
     def moveUpdate(self, d, speed):      
         x, y = self.rect.x, self.rect.y
 
@@ -39,10 +39,12 @@ class PacMan(pygame.sprite.Sprite):
         elif d == 3:
             x += speed
 
+        # Sjekker om x og y posisjon er større eller mindre en vindu høyde og bredde, og om figuren berører en av disse hjørnene.
+        # Om den gjør det stopper den opp og kan ikke gå videre.
         if 0 <= x <= WINDOW_WIDTH - self.rect.width and 0 <= y <= WINDOW_HEIGHT - self.rect.height:
             self.rect.x, self.rect.y = x, y
 
-    #collide with non killing stuff
+    # Kollisjoner med vegger for spilleren
     def collideD(self, d, speed):
         if d == 0:
             self.rect.move_ip(0, speed)
