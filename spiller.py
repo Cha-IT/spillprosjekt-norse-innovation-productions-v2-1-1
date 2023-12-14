@@ -28,9 +28,7 @@ class PacMan(pygame.sprite.Sprite):
     def moveUpdate(self, d, speed):      
         x, y = self.rect.x, self.rect.y
 
-        if d == -1:
-            self.rect.move_ip(0, 0)
-        elif d == 0:
+        if d == 0:
             y -= speed
         elif d == 1:
             y += speed
