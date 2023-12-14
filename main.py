@@ -94,8 +94,6 @@ while running:
     #Printer alle veggene ved bruk av wallSelect funksjonen.
     Walls.wallSelect(screen, walls_group)
   
-
-  
     # Tegner opp alle sprites
     for entity in all_sprites:
         screen.blit(entity.image, entity.rect)
@@ -119,7 +117,7 @@ while running:
         direction = 3
     
     # Oppdaterer fienders lokasjon og får den til å følge etter PacMan
-    fiende.moveFiende(pacman.rect)
+    fiende.moveFiende(pacman.rect, walls_group)
 
     pygame.display.flip()
 
