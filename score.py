@@ -11,8 +11,8 @@ class Score(object):
     def show_score(self, screen, width):
         screen.blit(self.text, (width/2-50, 0))
 
-    def score_up(self):
-        self.count += 100
+    def score_up(self, score):
+        self.count += score
         self.text = self.font.render('Score:' + str(self.count),1,self.white)
 
 def score_instance(score_instance, screen, width):

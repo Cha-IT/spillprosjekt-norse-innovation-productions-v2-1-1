@@ -47,9 +47,6 @@ color = COLOR_BLUE
 
 screen = pygame.display.set_mode([WINDOW_WIDTH, WINDOW_HEIGHT])
 
-
-
-
 #variables
 speed = 6
 running = True
@@ -70,13 +67,14 @@ pygame.time.set_timer(ADDENEMY, 10000)
 #Creates instances of Score, PacMan and Fiende
 Score = score.Score()
 new_fiende = Fiende()
-new_collectible = collectibles.Collectible()
 pacman = PacMan()
+new_collectible = collectibles.Collectible()
 
 #add to all sprites
 all_sprites.add(pacman)
 all_sprites.add(new_fiende)
 enemies.add(new_fiende)
+cGroupe.add(new_collectible) 
 
 ''' HOVED LOOPEN '''
 while running:
@@ -107,15 +105,8 @@ while running:
     all_sprites.draw(screen)
 
     #colectibe things
-    new_collectible.cSpawner(toggle, screen, cGroupe)
-    if toggle == True:
-        toggle = False
+    new_collectible.cSpawner(screen, cGroupe, pacman, Score)
 
-    if pygame.sprite.spritecollideany(pacman, cGroupe):
-        new_collectible.cEat()
-        Score.score_up()
-        toggle = True
-    
     #Printer alle veggene ved bruk av wallSelect funksjonen.
     Walls.wallSelect(screen, walls_group)
   
