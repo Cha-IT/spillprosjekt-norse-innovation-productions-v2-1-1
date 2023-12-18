@@ -18,12 +18,11 @@ class Collectible(pygame.sprite.Sprite):
             i = collectibleLocationList[random.randint(0,3)]
             new_collectible.rect = new_collectible.image.get_rect(center = (i['x'], i['y']))
             #set colour and points
-            e = collectibleScoreList[random.randint(0,2)]
+            e = collectibleScoreList[random.randint(0,3)]
             Collectible.Score = e['score']
             new_collectible.image.fill(e['RGB'])
             #add to group
             cGroupe.add(new_collectible)
-
         #Bullshit
         for entities in cGroupe:
             screen.blit(entities.image, entities.rect)
@@ -46,4 +45,5 @@ collectibleScoreList = [
     {'score':100, 'RGB':(255, 192, 203)},
     {'score':50, 'RGB':(255, 0, 0)},
     {'score':125, 'RGB':(100, 0, 255)},
+    {'score':25, 'RGB':(150, 100, 100)},
 ]
