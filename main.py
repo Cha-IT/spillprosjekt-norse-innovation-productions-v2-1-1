@@ -4,6 +4,7 @@ import score
 import math
 import spiller
 import fiender
+import collectibles
 from spiller import PacMan
 from fiender import Fiende
 from walls import Walls
@@ -54,11 +55,13 @@ speed = 6
 running = True
 direction = -1
 points = 0
+toggle = True
 
 #sprite groupes
 all_sprites = pygame.sprite.Group()
 walls_group = pygame.sprite.Group()
 enemies = pygame.sprite.Group()
+cGroupe = pygame.sprite.Group()
 
 ADDENEMY = pygame.USEREVENT + 1
 pygame.time.set_timer(ADDENEMY, 10000)
@@ -67,6 +70,7 @@ pygame.time.set_timer(ADDENEMY, 10000)
 #Creates instances of Score, PacMan and Fiende
 Score = score.Score()
 new_fiende = Fiende()
+new_collectible = collectibles.Collectible()
 pacman = PacMan()
 
 #add to all sprites
@@ -79,10 +83,8 @@ while running:
     for event in pygame.event.get():
         if event.type == QUIT:
             running = False
-
-
             # Add a new enemy?
-        elif event.type == ADDENEMY:
+        elif event.type == ADDENEMY and not len(enemies.sprites()) >= 3:
             # Create the new enemy and add it to sprite groups
             new_fiende = Fiende()
             enemies.add(new_fiende)
@@ -104,6 +106,15 @@ while running:
 
     all_sprites.draw(screen)
 
+    #colectibe things
+    new_collectible.cSpawner(toggle, screen, cGroupe)
+    if toggle == True:
+        toggle = False
+
+    if pygame.sprite.spritecollideany(pacman, cGroupe):
+        new_collectible.cEat()
+        Score.score_up()
+        toggle = True
     
     #Printer alle veggene ved bruk av wallSelect funksjonen.
     Walls.wallSelect(screen, walls_group)
