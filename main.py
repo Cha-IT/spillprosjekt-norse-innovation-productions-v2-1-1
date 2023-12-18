@@ -58,7 +58,7 @@ all_sprites = pygame.sprite.Group()
 walls_group = pygame.sprite.Group()
 
 # Call wallSelect using Walls.wallist
-Walls.wallSelect(screen, walls_group)
+
 
 #Creates instances of Score, PacMan and Fiende
 Score = score.Score()

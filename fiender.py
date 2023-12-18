@@ -1,5 +1,6 @@
 ''' Importerer forskjellige libraries inn i vårt spill '''
 import pygame
+from time import sleep, time
 import math
 import random
 
@@ -13,6 +14,7 @@ COLOR_BLACK = (0, 0, 0)
 COLOR_RED = (255, 0, 0)
 COLOR_YELLOW = (253, 255, 0)
 COLOR_BLUE = (0, 0 ,255)
+
 
 #Fiende klassen
 class Fiende(pygame.sprite.Sprite):
@@ -30,37 +32,42 @@ class Fiende(pygame.sprite.Sprite):
 
         new_rect = self.rect.copy()
 
+        direction = ''
         # Tvinger fienden til å bevege seg med 90 graders vinkel slik at den beveger seg likt som vår hovedfigur.
         # Her sjekker den om distanse x er større enn distanse y. Om den er det beveger den seg på x aksen
         # Om ikke beveger den seg på y aksen.
+
 
         if abs(dx) > abs(dy):
             # Move horizontally
             if dx > 0:
                 new_rect.x += self.speed
+
             elif dx < 0:
                 new_rect.x -= self.speed
+
         else:
             # Move vertically
             if dy > 0:
                 new_rect.y += self.speed
+
             elif dy < 0:
                 new_rect.y -= self.speed
 
-        if not pygame.sprite.spritecollideany(self, walls_group) and not new_rect.colliderect(pac_man_rect):
-            self.rect = new_rect
-        else:
-            # If collision, try a random direction
-            directions = [(self.speed, 0), (-self.speed, 0), (0, self.speed), (0, -self.speed)]
-            random.shuffle(directions)
 
-            for dx, dy in directions:
-                new_rect = self.rect.move(dx, dy)
 
-                if not pygame.sprite.spritecollideany(self, walls_group) and not new_rect.colliderect(pac_man_rect):
-                    self.rect = new_rect
-                    break
+        self.rect = new_rect
 
+        if pygame.sprite.spritecollideany(self, walls_group):
+            if dx > 0 or dx < 0:
+                new_rect.y -= self.speed
+  
+            if dy > 0 or dy < 0:
+                new_rect.x -= self.speed                   
+
+
+
+        # Adjust the position to stay within screen boundaries
         # Setter en grense for fiendene slik at den ikke kan bevege seg ut av spill vinduet.
         self.rect.x = max(0, min(self.rect.x, pygame.display.get_surface().get_width() - self.rect.width))
         self.rect.y = max(0, min(self.rect.y, pygame.display.get_surface().get_height() - self.rect.height))
