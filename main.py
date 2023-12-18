@@ -47,6 +47,8 @@ color = COLOR_BLUE
 screen = pygame.display.set_mode([WINDOW_WIDTH, WINDOW_HEIGHT])
 
 
+
+
 #variables
 speed = 6
 running = True
@@ -56,25 +58,37 @@ points = 0
 #sprite groupes
 all_sprites = pygame.sprite.Group()
 walls_group = pygame.sprite.Group()
+enemies = pygame.sprite.Group()
 
-# Call wallSelect using Walls.wallist
+ADDENEMY = pygame.USEREVENT + 1
+pygame.time.set_timer(ADDENEMY, 10000)
 
 
 #Creates instances of Score, PacMan and Fiende
 Score = score.Score()
-fiende = Fiende()
+new_fiende = Fiende()
 pacman = PacMan()
 
 #add to all sprites
 all_sprites.add(pacman)
-all_sprites.add(fiende)
+all_sprites.add(new_fiende)
+enemies.add(new_fiende)
 
 ''' HOVED LOOPEN '''
 while running:
     for event in pygame.event.get():
         if event.type == QUIT:
             running = False
-    
+
+
+            # Add a new enemy?
+        elif event.type == ADDENEMY:
+            # Create the new enemy and add it to sprite groups
+            new_fiende = Fiende()
+            enemies.add(new_fiende)
+            all_sprites.add(new_fiende)
+            
+
     #fill background
     screen.fill(COLOR_BLACK)   
     screen.blit(bg, (0,0))
@@ -87,7 +101,7 @@ while running:
         direction = -1
 
     # Draws all the sprites on the screen
-    all_sprites.update()
+
     all_sprites.draw(screen)
 
     
@@ -98,7 +112,7 @@ while running:
     for entity in all_sprites:
         screen.blit(entity.image, entity.rect)
         screen.blit(spiller.pbg, (pacman.rect.left, pacman.rect.top))  
-        screen.blit(fiender.fbg, (fiende.rect.left, fiende.rect.top))  
+        screen.blit(fiender.fbg, (new_fiende.rect.left, new_fiende.rect.top))
 
     # Sjekker for pressed keys og beveger spilleren
     pressed_key = pygame.key.get_pressed()
@@ -117,8 +131,7 @@ while running:
         direction = 3
     
     # Oppdaterer fienders lokasjon og får den til å følge etter PacMan
-    fiende.moveFiende(pacman.rect, walls_group)
-
+    enemies.update(pacman.rect, walls_group)
     pygame.display.flip()
 
     # Setter frame rate til 30

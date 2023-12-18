@@ -22,7 +22,7 @@ class PacMan(pygame.sprite.Sprite):
         super(PacMan, self).__init__()
         self.image = pygame.Surface((25, 25))
         self.image.fill((COLOR_YELLOW))
-        self.rect = self.image.get_rect()
+        self.rect = self.image.get_rect(center = (325, 400))
 
 #Oppretter bevegelse for spilleren. Starter på X & Y: 0, 0 
     def moveUpdate(self, d, speed):      

@@ -22,11 +22,13 @@ class Fiende(pygame.sprite.Sprite):
         super(Fiende, self).__init__()
         self.image = pygame.Surface((25, 25))
         self.image.fill((COLOR_RED))
-        self.rect = self.image.get_rect()
+        self.rect = self.image.get_rect(center = (325, 300))
         self.speed = 3
+        
 
     # moveFiende som tar for seg bevegelsen til fienden og hvordan den skal følge etter pacman og evt kollisjoner.
-    def moveFiende(self, pac_man_rect, walls_group):
+    def update(self, pac_man_rect, walls_group):
+        
         # Beregner distanse mellom pacman og fienden selv.
         dx, dy = pac_man_rect.x - self.rect.x, pac_man_rect.y - self.rect.y
 
@@ -71,3 +73,4 @@ class Fiende(pygame.sprite.Sprite):
         # Setter en grense for fiendene slik at den ikke kan bevege seg ut av spill vinduet.
         self.rect.x = max(0, min(self.rect.x, pygame.display.get_surface().get_width() - self.rect.width))
         self.rect.y = max(0, min(self.rect.y, pygame.display.get_surface().get_height() - self.rect.height))
+
