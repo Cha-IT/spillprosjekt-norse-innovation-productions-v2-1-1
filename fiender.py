@@ -22,7 +22,7 @@ class Fiende(pygame.sprite.Sprite):
         super(Fiende, self).__init__()
         self.image = pygame.Surface((25, 25))
         self.image.fill((COLOR_RED))
-        self.rect = self.image.get_rect()
+        self.rect = self.image.get_rect(center = (325, 300))
         self.speed = 3
 
     # moveFiende som tar for seg bevegelsen til fienden og hvordan den skal følge etter pacman og evt kollisjoner.
