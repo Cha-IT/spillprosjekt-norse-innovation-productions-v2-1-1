@@ -52,37 +52,83 @@ class Walls(pygame.sprite.Sprite):
     def wallSelect(screen):
         for i in wallList:
             newWall = Walls()
-            newWall.surf = pygame.Surface((i['width'], i['hight']))
+            newWall.surf = pygame.Surface((i['width'], i['height']))
             newWall.surf.fill((0, 0, 255))
             newWall.rect = newWall.surf.get_rect(center = (i['x'], i['y']))
             screen.blit(newWall.surf, newWall.rect)
             WallsG.add(newWall)
 
 wt = 20
+path = 40
 
-wallList = [{'width': 120, 'hight': wt, 'x': 250, 'y': 100-wt/2},
-            {'width': wt, 'hight': 120, 'x': 100, 'y': 250},
-            {'width': 120, 'hight': wt, 'x': 400, 'y': 550-wt/2},
-            {'width': wt, 'hight': 120, 'x': 550-wt/2, 'y': 400},
-            {'width': wt*2, 'hight': 120, 'x': 325, 'y': 325},            
-            {'width': 120, 'hight': wt*2, 'x': 325, 'y': 325},
-            {'width': 120, 'hight': wt, 'x': 275-60, 'y': 275-wt/2},
-            {'width': wt, 'hight': 120, 'x': 275-wt/2, 'y': 275-60},
-            {'width': 120, 'hight': wt, 'x': 275-60, 'y': 275-wt/2},
-            {'width': 120, 'hight': wt, 'x': 395-60+100, 'y': 275-wt/2},
-            {'width': wt, 'hight': 120, 'x': 345-wt/2+50, 'y': 275-60},
-            {'width': wt, 'hight': 120, 'x': 275-wt/2, 'y': 275+100+60},
-            {'width': 120, 'hight': wt, 'x': 275-60, 'y': 275+120-wt/2},
-            {'width': 120, 'hight': wt, 'x': 395-60+100, 'y': 275+120-wt/2},
-            {'width': wt, 'hight': 120, 'x': 345-wt/2+50, 'y': 275+100+60},
-            {'width': wt*2, 'hight': wt*2, 'x': 395+120-70, 'y': 275+120+50},
-            {'width': wt*2, 'hight': wt*2, 'x': 395-70, 'y': 275+120+50},
-            {'width': wt*2, 'hight': wt*2, 'x': 395+120-70, 'y': 275+50},
-            {'width': wt*2, 'hight': wt*2, 'x': 395+120-70, 'y': 275-120+50},
-            {'width': wt*2, 'hight': wt*2, 'x': 395-70, 'y': 275-120+50},
-            {'width': wt*2, 'hight': wt*2, 'x': 395-120-70, 'y': 275-120+50},
-            {'width': wt*2, 'hight': wt*2, 'x': 395-120-70, 'y': 275+50},
-            {'width': wt*2, 'hight': wt*2, 'x': 395-120-70, 'y': 275+120+50},
+wallList = [
+
+            #center path*0.5 eller /2
+            {'width': 50, 'height': 50, 'x': WINDOW_WIDTH/2-50-path/2+25, 'y': WINDOW_HEIGHT/2-50-path/2+25},            
+            {'width': 50, 'height': 50, 'x': WINDOW_WIDTH/2+path/2+25, 'y': WINDOW_HEIGHT/2-50-path/2+25},
+            {'width': 50, 'height': 50, 'x': WINDOW_WIDTH/2-50-path/2+25, 'y': WINDOW_WIDTH/2+path/2+25},            
+            {'width': 50, 'height': 50, 'x': WINDOW_WIDTH/2+path/2+25, 'y': WINDOW_WIDTH/2+path/2+25},
+
+            #layer 1 path*1.5
+            #l+r center exits    
+            {'width': wt, 'height': 70+path, 'x': WINDOW_WIDTH/2-50-wt-path*1.5+wt/2, 'y': WINDOW_HEIGHT/2+path/2+(70+path)/2},
+            {'width': wt, 'height': 70+path, 'x': WINDOW_WIDTH/2+50+path*1.5+wt/2, 'y': WINDOW_HEIGHT/2+path/2+(70+path)/2},
+            {'width': wt, 'height': 70+path, 'x': WINDOW_WIDTH/2-50-wt-path*1.5+wt/2, 'y': WINDOW_HEIGHT/2-(70+path)-path/2+(70+path)/2},
+            {'width': wt, 'height': 70+path, 'x': WINDOW_WIDTH/2+50+path*1.5+wt/2, 'y': WINDOW_HEIGHT/2-(70+path)-path/2+(70+path)/2},
+
+            #top+bottom center exits
+            {'width': 100+path, 'height': wt, 'x': WINDOW_WIDTH/2-50-path/2+(100+path)/2, 'y': WINDOW_HEIGHT/2+50+path/2+path+wt/2},
+            {'width': 100+path, 'height': wt, 'x': WINDOW_WIDTH/2-50-path/2+(100+path)/2, 'y': WINDOW_HEIGHT/2-50-wt-path/2-path+wt/2},
+
+            #Layer 2 Total path = path*2.5
+            #(x < WINDOW_WIDTH/2) -50-wt*2 (bredden på veggene som kom før)
+            #De fleste veggene er bare på layer 2 i 1 av aksene (path*1.5 på den osm ikke er lay2)
+            
+            #Top walls lay2
+            {'width': 90+path*2, 'height': wt*2, 'x': WINDOW_WIDTH/2-50-wt*2-path*2.5+(90+path*2)/2, 'y': WINDOW_HEIGHT/2-50-wt*3-path*2.5+wt},
+            {'width': 90+path*2, 'height': wt*2, 'x': WINDOW_WIDTH/2+path*0.5+(90+path*2)/2, 'y': WINDOW_HEIGHT/2-50-wt*3-path*2.5+wt},
+
+            #Bottom walls lay2
+            {'width': 90+path*2, 'height': wt*2, 'x': WINDOW_WIDTH/2-50-wt*2-path*2.5+(90+path*2)/2, 'y': WINDOW_HEIGHT/2+50+wt+path*2.5+wt},
+            {'width': 90+path*2, 'height': wt*2, 'x': WINDOW_WIDTH/2+path*0.5+(90+path*2)/2, 'y': WINDOW_HEIGHT/2+50+wt+path*2.5+wt},
+
+            #L+R walls lay 2
+            {'width': wt, 'height': 140+path*3, 'x': WINDOW_WIDTH/2-50-wt*2-path*2.5+wt/2, 'y': WINDOW_HEIGHT/2-50-wt-path*1.5+(140+path*3)/2},
+            {'width': wt, 'height': 140+path*3, 'x': WINDOW_WIDTH/2+50+wt+path*2.5+wt/2, 'y': WINDOW_HEIGHT/2-50-wt-path*1.5+(140+path*3)/2},
+            
+            #Layer 3?
+            #Top squares 
+            {'width': wt*2, 'height': wt*2, 'x': WINDOW_WIDTH/2+50+wt*2+path*3.5+wt, 'y': WINDOW_HEIGHT/2-50-wt*3-path*2.5+wt},
+            {'width': wt*2, 'height': wt*2, 'x': WINDOW_WIDTH/2-50-wt*4-path*3.5+wt, 'y': WINDOW_HEIGHT/2-50-wt*3-path*2.5+wt},
+
+            {'width': wt*2, 'height': 50, 'x': WINDOW_WIDTH/2+50+wt*2+path*3.5+wt, 'y': WINDOW_HEIGHT/2-50-wt-path*1.5+50/2},
+            {'width': wt*2, 'height': 50, 'x': WINDOW_WIDTH/2-50-wt*4-path*3.5+wt, 'y': WINDOW_HEIGHT/2-50-wt-path*1.5+50/2},
+            
+            #Bottom squares
+            {'width': wt*2, 'height': wt*2, 'x': WINDOW_WIDTH/2+50+wt*2+path*3.5+wt, 'y': WINDOW_HEIGHT/2+50+wt+path*2.5+wt},
+            {'width': wt*2, 'height': wt*2, 'x': WINDOW_WIDTH/2-50-wt*4-path*3.5+wt, 'y': WINDOW_HEIGHT/2+50+wt+path*2.5+wt},
+
+            {'width': wt*2, 'height': 50, 'x': WINDOW_WIDTH/2+50+wt*2+path*3.5+wt, 'y': WINDOW_HEIGHT/2+wt+path*1.5+50/2},
+            {'width': wt*2, 'height': 50, 'x': WINDOW_WIDTH/2-50-wt*4-path*3.5+wt, 'y': WINDOW_HEIGHT/2+wt+path*1.5+50/2},
+
+            #Borders
+            #Bot+Top
+            {'width': 100+wt*8+path*9, 'height': wt, 'x': WINDOW_WIDTH/2-50-wt*4-path*4.5+(100+wt*8+path*9)/2, 'y': WINDOW_HEIGHT/2+50+wt*3+path*3.5+wt/2},
+            {'width': 100+wt*8+path*9, 'height': wt, 'x': WINDOW_WIDTH/2-50-wt*4-path*4.5+(100+wt*8+path*9)/2, 'y': WINDOW_HEIGHT/2-50-wt*4-path*3.5+wt/2},
+
+            #left
+            {'width': wt, 'height': 50+wt*4+path*3, 'x': WINDOW_WIDTH/2-50-wt*5-path*4.5+wt/2, 'y': WINDOW_HEIGHT/2-50-wt*4-path*3.5+(50+wt*4+path*3)/2},
+            {'width': wt, 'height': 50+wt*4+path*3, 'x': WINDOW_WIDTH/2-50-wt*5-path*4.5+wt/2, 'y': WINDOW_HEIGHT/2+path*0.5+(50+wt*4+path*3)/2}, 
+            #right
+            {'width': wt, 'height': 50+wt*4+path*3, 'x': WINDOW_WIDTH/2+50+wt*4+path*4.5+wt/2, 'y': WINDOW_HEIGHT/2-50-wt*4-path*3.5+(50+wt*4+path*3)/2},
+            {'width': wt, 'height': 50+wt*4+path*3, 'x': WINDOW_WIDTH/2+50+wt*4+path*4.5+wt/2, 'y': WINDOW_HEIGHT/2+path*0.5+(50+wt*4+path*3)/2}, 
+
+            #Portal exits?
+            {'width': 100+path+wt*2, 'height': wt, 'x': WINDOW_WIDTH/2-100-50-wt*4-path*4.5+(100+path+wt*2)/2, 'y': WINDOW_HEIGHT/2-wt-path*0.5+wt/2},
+            {'width': 100+path+wt*2, 'height': wt, 'x': WINDOW_WIDTH/2-100-50-wt*4-path*4.5+(100+path+wt*2)/2, 'y': WINDOW_HEIGHT/2+path*0.5+wt/2}, 
+            
+            {'width': 100+path+wt*2, 'height': wt, 'x': WINDOW_WIDTH/2+50+wt*2+path*3.5+(100+path+wt*2)/2, 'y': WINDOW_HEIGHT/2-wt-path*0.5+wt/2},
+            {'width': 100+path+wt*2, 'height': wt, 'x': WINDOW_WIDTH/2+50+wt*2+path*3.5+(100+path+wt*2)/2, 'y': WINDOW_HEIGHT/2+path*0.5+wt/2},        
             
 ]
 #variables
