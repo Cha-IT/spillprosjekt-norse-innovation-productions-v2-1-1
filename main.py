@@ -68,13 +68,11 @@ pygame.time.set_timer(ADDENEMY, 10000)
 Score = score.Score()
 new_fiende = Fiende()
 pacman = PacMan()
-new_collectible = collectibles.Collectible()
 
 #add to all sprites
 all_sprites.add(pacman)
 all_sprites.add(new_fiende)
-enemies.add(new_fiende)
-cGroupe.add(new_collectible) 
+enemies.add(new_fiende) 
 
 ''' HOVED LOOPEN '''
 while running:
@@ -105,7 +103,7 @@ while running:
     all_sprites.draw(screen)
 
     #colectibe things
-    new_collectible.cSpawner(screen, cGroupe, pacman, Score)
+    collectibles.Collectible.cSpawner(screen, cGroupe, pacman, Score)
 
     #Printer alle veggene ved bruk av wallSelect funksjonen.
     Walls.wallSelect(screen, walls_group)

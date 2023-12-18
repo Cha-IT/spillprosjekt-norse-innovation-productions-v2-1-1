@@ -1,6 +1,5 @@
 import pygame
 import random
-import score
 
 class Collectible(pygame.sprite.Sprite):
     def __init__(self):
@@ -11,24 +10,31 @@ class Collectible(pygame.sprite.Sprite):
         #Hell
         self.Score = 100
 
-    def cSpawner(self, screen, cGroupe, pacman, score):
+    def cSpawner(screen, cGroupe, pacman, score):
         #only prints out fruit if no fruit is out
         if not len(cGroupe.sprites()) > 0:
+            new_collectible = Collectible()
             #set position
             i = collectibleLocationList[random.randint(0,3)]
-            self.rect = self.image.get_rect(center = (i['x'], i['y']))
+            new_collectible.rect = new_collectible.image.get_rect(center = (i['x'], i['y']))
             #set colour and points
             e = collectibleScoreList[random.randint(0,2)]
-            self.Score = e['score']
-            self.image.fill(e['RGB'])
+            Collectible.Score = e['score']
+            new_collectible.image.fill(e['RGB'])
             #add to group
-            cGroupe.add(self) 
-        screen.blit(self.image, self.rect)
+            cGroupe.add(new_collectible)
+
+        #Bullshit
+        for entities in cGroupe:
+            screen.blit(entities.image, entities.rect)
 
         #kills fruit and gives points
         if pygame.sprite.spritecollideany(pacman, cGroupe):
-            self.kill()
-            score.score_up(self.Score)
+            #Bullshit 2 electric boogalo
+            for entities in cGroupe:
+                entities.kill()
+            #give score its score
+            score.score_up(Collectible.Score)
 
 collectibleLocationList = [
     {'x':35, 'y':100},
