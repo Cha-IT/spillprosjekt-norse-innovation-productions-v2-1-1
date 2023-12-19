@@ -26,8 +26,6 @@ pygame.init()
 WINDOW_HEIGHT = 650
 WINDOW_WIDTH = 650
 
-#cock... um i mean CLOCK
-#I SWEAR I MENT COCK NOT COCK
 clock = pygame.time.Clock()
 
 # Bakgrunnsteksturer
