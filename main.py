@@ -98,6 +98,10 @@ while running:
         pacman.collideD(direction, speed)
         direction = -1
 
+    # Slutter spillet ved berøring av fiender og pacman
+    if pygame.sprite.spritecollideany(pacman, enemies):
+        running = False
+
     # Draws all the sprites on the screen
 
     all_sprites.draw(screen)
