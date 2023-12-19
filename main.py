@@ -61,7 +61,7 @@ enemies = pygame.sprite.Group()
 cGroupe = pygame.sprite.Group()
 
 ADDENEMY = pygame.USEREVENT + 1
-pygame.time.set_timer(ADDENEMY, 10000)
+pygame.time.set_timer(ADDENEMY, 12000)
 
 
 #Creates instances of Score, PacMan and Fiende
